@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ic3d_chess</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <div id="menu" class="menu hidden">
+    <img src="components/Group-126.svg" class="bg-deco" style="top:-297px;left:0;width:2258px;height:1673px;" />
+    <img src="components/CONE.svg" class="bg-deco" style="top:47px;left:40px;" />
+    <img src="components/CONE-1.svg" class="bg-deco" style="top:760px;left:40px;" />
+    <img src="components/Group13.svg" class="bg-deco" style="top:120px;left:30px;" />
+    <div class="glow-ball-purple" style="top:-120px;left:120px;"></div>
+    <div class="glow-ball-purple" style="bottom:-80px;left:-80px;"></div>
+    <div class="glow-ball-white" style="top:-40px;left:40px;"></div>
+
+    
+    <div id="panel" class="panel">
+      <div class="menu-topbar">
+        <div id="backBtn" class="back-btn hidden" onclick="post('menuBack')"><i class="fas fa-arrow-left"></i><span>Back</span></div>
+        <div class="exit-btn" onclick="post('menuClose')"><span>Exit</span></div>
+      </div>
+      <div class="panel-title">CHESS</div>
+      <div class="search-btn"><i class="fas fa-chess-king"></i><span id="menuSub">Choose a game mode</span></div>
+      <div class="panel-desc" id="menuDesc">Play against another player or challenge the computer.</div>
+
+      <div id="ratingBadge" class="rating-badge hidden">
+        <div class="rb-left"><span class="rb-label" id="rbLabel">Your rating</span><span class="rb-elo" id="rbElo">1000</span></div>
+        <span class="rb-tag" id="rbTag">NOV</span>
+      </div>
+
+      <div class="gradient-bar"></div>
+      <div id="cards" class="cards"></div>
+    </div>
+
+    
+    <div id="leaderboard" class="leaderboard hidden">
+      <div class="lb-back" onclick="closeLeaderboard()"><i class="fas fa-arrow-left"></i><span id="lbBack">Back</span></div>
+      <div class="panel-title" id="lbTitle">LEADERBOARD</div>
+      <div class="panel-desc" id="lbSubtitle">Top players by rating</div>
+      <div class="gradient-bar"></div>
+      <div class="lb-head">
+        <span class="lb-h-rank">#</span>
+        <span class="lb-h-player" id="lbColPlayer">Player</span>
+        <span class="lb-h-rating" id="lbColRating">Rating</span>
+        <span class="lb-h-record" id="lbColRecord">W / L / D</span>
+      </div>
+      <div id="lbList" class="lb-list"></div>
+    </div>
+  </div>
+
+  
+  <div id="hud" class="hud hidden">
+    
+    <div class="clockcard" id="topClock">
+      <div class="clock-side">
+        <span class="clock-piece" id="topPiece">♚</span>
+        <span class="clock-name" id="topName">Opponent</span>
+      </div>
+      <div class="clock-time" id="topTime">10:00</div>
+    </div>
+
+    
+    <div class="statuspill" id="statusPill"><i class="fas fa-circle"></i><span id="statusText">Your move</span></div>
+
+    
+    <div class="clockcard" id="botClock">
+      <div class="clock-side">
+        <span class="clock-piece" id="botPiece">♔</span>
+        <span class="clock-name" id="botName">You</span>
+      </div>
+      <div class="clock-time" id="botTime">10:00</div>
+    </div>
+
+    
+    <div class="keybinds">
+      <div class="keybind"><span class="key">L-CLICK</span><span class="kdesc">Move piece</span></div>
+      <div class="keybind"><span class="key">BACKSPACE</span><span class="kdesc">Stand up</span></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
