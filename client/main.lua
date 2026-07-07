@@ -184,7 +184,11 @@ local function seatPedAtChair(ped, chair, pedOff)
     local pos = GetOffsetFromEntityInWorldCoords(chair, pedOff.x, pedOff.y, pedOff.z)
     SetEntityCoords(ped, pos.x, pos.y, pos.z, false, false, false, false)
     SetEntityHeading(ped, GetEntityHeading(chair))
-    FreezeEntityPosition(ped, true)
+    -- NOTE: we do NOT FreezeEntityPosition the local player here. Freezing stops
+    -- the sit animation from replicating, so other players would see us floating.
+    -- The looping sit anim keeps us in place and movement is blocked by the
+    -- disabled controls in the seated loop.
+    SetPedCanRagdoll(ped, false)
     playSeatAnim(ped, Config.Anim.idle, true)
 end
 
@@ -536,7 +540,16 @@ local function seatedLoop(locId, role)
                 DisableAllControlActions(0)
                 local waiting = pub.waiting and not pub.vsNpc
 
-                
+                -- keep the sit animation alive (so it stays synced to other players)
+                if (seated.animAt or 0) < GetGameTimer() then
+                    local ped = PlayerPedId()
+                    if not IsEntityPlayingAnim(ped, Config.Anim.dict, Config.Anim.idle, 3) then
+                        playSeatAnim(ped, Config.Anim.idle, true)
+                    end
+                    seated.animAt = GetGameTimer() + 1000
+                end
+
+
                 local lookPos
                 if waiting and Config.Camera.waitOrbit.enabled then
                     local o = Config.Camera.waitOrbit
@@ -606,6 +619,7 @@ function exitSeat()
     local ped = PlayerPedId()
     ClearPedTasksImmediately(ped)
     FreezeEntityPosition(ped, false)
+    SetPedCanRagdoll(ped, true)
     if seated.prev then SetEntityCoords(ped, seated.prev.x, seated.prev.y, seated.prev.z, false, false, false, false) end
     seated = nil
     legalMap = {}
@@ -797,7 +811,7 @@ end)
 
 
 RegisterNetEvent('ic3d_chess:notify', function(msg)
-    lib.notify({ title = Config.L('notify_title'), description = msg, position = 'top' })
+    lib.notify({ title = Config.L('notify_title'), description = msg, position = 'center-left' })
 end)
 
 RegisterNetEvent('ic3d_chess:youAre', function(locId, role)

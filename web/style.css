@@ -42,6 +42,11 @@ html, body {
 
 .menu {
   position: fixed; inset: 0;
+  overflow: hidden;
+  /* full-viewport backdrop so it fills any resolution (1080p / 1440p / 4K / ultrawide) */
+  background:
+    radial-gradient(1400px 900px at 22% 45%, rgba(139, 92, 246, 0.16), rgba(139, 92, 246, 0) 60%),
+    linear-gradient(130deg, rgba(10, 6, 18, 0.94) 0%, rgba(16, 9, 27, 0.9) 45%, rgba(10, 6, 18, 0.84) 100%);
   opacity: 0;
   transition: opacity 0.28s ease;
 }
